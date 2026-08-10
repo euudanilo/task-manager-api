@@ -3,6 +3,7 @@ package com.danilo.taskmanager.controller;
 import com.danilo.taskmanager.model.Task;
 import com.danilo.taskmanager.model.TaskStatus;
 import com.danilo.taskmanager.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> create(@RequestBody Task task) {
+    public ResponseEntity<Task> create(@Valid @RequestBody Task task) {
         Task created = taskService.create(task);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
