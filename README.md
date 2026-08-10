@@ -1,6 +1,6 @@
 # Task Manager API
 
-REST API para gerenciamento de tarefas construída com **Java** e **Spring Boot**, seguindo arquitetura em camadas (controller → service → repository → model). Projeto pessoal desenvolvido durante o 1º período de Engenharia de Software, aplicando práticas usadas em ambientes profissionais de backend.
+REST API para gerenciamento de tarefas construída com **Java** e **Spring Boot**, seguindo arquitetura em camadas (controller → service → repository → model). Projeto pessoal desenvolvido durante o 2º período de Engenharia de Software, aplicando práticas usadas em ambientes profissionais de backend.
 
 🔗 **API em produção:** [https://task-manager-api-2y19.onrender.com](https://task-manager-api-2y19.onrender.com)
 📄 **Documentação interativa (Swagger):** [https://task-manager-api-2y19.onrender.com/swagger-ui.html](https://task-manager-api-2y19.onrender.com/swagger-ui.html)
