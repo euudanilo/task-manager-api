@@ -1,5 +1,8 @@
 package com.danilo.taskmanager.service;
 
+import com.danilo.taskmanager.exception.TaskNotFoundException;
+import com.danilo.taskmanager.exception.UnauthorizedAccessException;
+import com.danilo.taskmanager.exception.UserNotFoundException;
 import com.danilo.taskmanager.model.Task;
 import com.danilo.taskmanager.model.TaskStatus;
 import com.danilo.taskmanager.model.User;
@@ -25,7 +28,7 @@ public class TaskService {
     private User getCurrentUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Authenticated user not found: " + username));
+                .orElseThrow(() -> new UserNotFoundException(username));
     }
 
     public List<Task> findAll() {
@@ -34,10 +37,10 @@ public class TaskService {
 
     public Task findById(Long id) {
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+                .orElseThrow(() -> new TaskNotFoundException(id));
 
         if (!task.getUser().getId().equals(getCurrentUser().getId())) {
-            throw new RuntimeException("You don't have permission to access this task");
+            throw new UnauthorizedAccessException("You don't have permission to access this task");
         }
 
         return task;
@@ -53,7 +56,7 @@ public class TaskService {
     }
 
     public Task update(Long id, Task updatedTask) {
-        Task existingTask = findById(id); // já valida dono, por causa do findById acima
+        Task existingTask = findById(id);
 
         existingTask.setTitle(updatedTask.getTitle());
         existingTask.setDescription(updatedTask.getDescription());
@@ -65,7 +68,7 @@ public class TaskService {
     }
 
     public void delete(Long id) {
-        Task task = findById(id); // já valida dono
+        Task task = findById(id);
         taskRepository.delete(task);
     }
 

@@ -2,6 +2,8 @@ package com.danilo.taskmanager.service;
 
 import com.danilo.taskmanager.dto.RegisterRequest;
 import com.danilo.taskmanager.dto.UserResponse;
+import com.danilo.taskmanager.exception.EmailAlreadyRegisteredException;
+import com.danilo.taskmanager.exception.UsernameAlreadyTakenException;
 import com.danilo.taskmanager.model.User;
 import com.danilo.taskmanager.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,11 +22,11 @@ public class UserService {
 
     public UserResponse register(RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new RuntimeException("Username already taken: " + request.getUsername());
+            throw new UsernameAlreadyTakenException(request.getUsername());
         }
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already registered: " + request.getEmail());
+            throw new EmailAlreadyRegisteredException(request.getEmail());
         }
 
         User user = new User();
